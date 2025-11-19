@@ -97,7 +97,7 @@ class LetterFrequency:
             print('LetterFrequency: No analysis has been done! Please analyse text before calculating chi-squared.')
             return
 
-        with open('english_letter_frequency.txt', 'r') as f:
+        with open('LetterFrequency/english_letter_frequency.txt', 'r') as f:
             expectedFrequency = [float(line.split(',')[1]) for line in f.readlines()]
         
         frequencyList = self.letterList.toList()
