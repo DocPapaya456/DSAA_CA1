@@ -9,14 +9,15 @@ class Menu(Options):
     # Display Welcome Screen
     def displayWelcome(self):
         print('''
-    *********************************************************
-    *                                                       *
-    *     ~ Keyword Cipher Encrypted Message Analyzer ~     *
-    *-------------------------------------------------------*
-    *                                                       *
-    *  - Done by: Nathan Soon (2401421)                     *
-    *  - Class DAAA/2A/21                                   *
-    *********************************************************
+*********************************************************
+* ST1507 DSAA: Welcome to:                              *
+*                                                       *
+*     ~ Keyword Cipher Encrypted Message Analyzer ~     *
+*-------------------------------------------------------*
+*                                                       *
+*  - Done by: Nathan Soon (2401421)                     *
+*  - Class DAAA/2A/21                                   *
+*********************************************************
             ''')
         input("Press Enter, to continue...")
         print()
@@ -25,14 +26,14 @@ class Menu(Options):
     def displayOptions(self):
         print(
             '''
-    Please select your choice: (1,2,3,4,5,6,7)
-    \t1. Encrypt/Decrypt File
-    \t2. Letter frequency distribution
-    \t3. Infer cipher keyword
-    \t4. Batch Decryption
-    \t5. Extra Option One
-    \t6. Extra Option Two
-    \t7. Exit
+Please select your choice: (1,2,3,4,5,6,7)
+\t1. Encrypt/Decrypt File
+\t2. Letter frequency distribution
+\t3. Infer cipher keyword
+\t4. Batch Decryption
+\t5. Encrypt/Decrypt File using Vigenère
+\t6. Extra Option Two
+\t7. Exit
             '''
         )
 

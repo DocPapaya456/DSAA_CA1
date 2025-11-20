@@ -1,6 +1,7 @@
 import string
+from Ciphers.Cipher import Cipher
 
-class KeywordCipher:
+class KeywordCipher(Cipher):
     def __init__(self, keyword):
         formattedKeyword = self.formatKeyword(keyword.upper())
         self.__alphabet = string.ascii_uppercase
@@ -42,29 +43,6 @@ class KeywordCipher:
             plaintext += plainChar
         return plaintext
     
-    # Encrypts file contents from input_path and outputs into output_path
-    def encryptFile(self, input_path, output_path):
+    
 
-        # Read from input file
-        with open(input_path, 'r', encoding='utf-8') as infile:
-            contents = infile.read()
-
-        # Encrypt file contents
-        processed = self.encrypt(contents)
-
-        # Write processed data to output file
-        with open(output_path, 'w', encoding='utf-8') as outfile:
-            outfile.write(processed)
-
-    # Decrypts file contents from input_path and outputs into output_path
-    def decryptFile(self, input_path, output_path):
-        # Read from input file
-        with open(input_path, 'r', encoding='utf-8') as infile:
-            contents = infile.read()
-
-        # Encrypt file contents
-        processed = self.decrypt(contents)
-
-        # Write processed data to output file
-        with open(output_path, 'w', encoding='utf-8') as outfile:
-            outfile.write(processed)
+    
