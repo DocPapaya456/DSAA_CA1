@@ -1,4 +1,5 @@
 from Ciphers.Cipher import Cipher
+from DataStructures.AlphaChar import AlphaChar
 
 class VigenereCipher(Cipher):
     def __init__(self, key):
@@ -36,11 +37,10 @@ class VigenereCipher(Cipher):
         ciphertext = ""
         letters, puncuation = self.seperateLettersPunctuation(plaintext)
         for i, char in enumerate(letters):
-            cipherChar = chr(ord('A') + (ord(char.upper()) + ord(self.key[i%len(self.key)]) - 2*ord('A')) % 26)
-            if char.islower():
-                cipherChar = cipherChar.lower()
+            cipherChar = AlphaChar(char)
+            cipherChar += AlphaChar(self.key[i%len(self.key)])
             
-            ciphertext += cipherChar
+            ciphertext += str(cipherChar)
         
         return self.combineLettersPunctuation(ciphertext, puncuation)
 
@@ -48,9 +48,8 @@ class VigenereCipher(Cipher):
         plaintext = ""
         letters, puncuation = self.seperateLettersPunctuation(ciphertext)
         for i, char in enumerate(letters):
-            plainChar = chr(ord('A') + (ord(char.upper()) - ord(self.key[i%len(self.key)])) % 26)
-            if char.islower():
-                plainChar = plainChar.lower()
+            plainChar = AlphaChar(char)
+            plainChar -= AlphaChar(self.key[i%len(self.key)])
             
             plaintext += plainChar
         

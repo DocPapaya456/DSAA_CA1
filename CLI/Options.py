@@ -12,7 +12,7 @@ class Options:
             "3": self.inferCipherKeyword,
             "4": self.batchDecryption,
             "5": self.encryptDecryptFileVignere,
-            "6": self.extraTwo
+            "6": self.indexOfCoincidence
         }
 
     # Runs specified option function
@@ -77,7 +77,7 @@ class Options:
         
         letterFreq = LetterFrequency()
         letterFreq.analyseFromFile(input_file)
-        print(letterFreq.displayGraph())
+        letterFreq.displayGraph()
         print()
 
     # Infer cipher keyword
@@ -197,5 +197,14 @@ Because it uses multiple shifting values instead of a single one, the Vigenère 
             vignereCipher.decryptFile(input_file, output_file)
     
     # Extra option 2
-    def extraTwo(self):
-        print("extraTwo: Not implemented!")
+    def indexOfCoincidence(self):
+        print('''*****************************
+* Index of Coincidence (IC) *
+*****************************
+
+The IC measures how likely two letters in a text are the same. In Vigenère cipher analysis, it helps estimate the key length.
+For a guessed key length k, the ciphertext is split into k parts, IC is computed for each, and the average is compared:
+    0.066 --> likely English text (probable key length)
+    0.038 --> random text (wrong key length)
+''')
+        input('Press Enter, to continue...')
