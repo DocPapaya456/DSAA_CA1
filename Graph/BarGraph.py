@@ -2,9 +2,12 @@ from abc import ABC, abstractmethod
 class BarGraph(ABC):
     def __init__(self):
         self.graph = None
+        self.labels = None
+        self.height = None
     
     # Formats the graph
     def buildGraph(self, labels, heights):
+        self.labels = labels
         self.graph = self.__buildBarGraph(heights)
         self.graph = self.__reformatBarGraph()
         self.addInformation()
@@ -17,21 +20,23 @@ class BarGraph(ABC):
         return [' ' + ' '.join([string[-i] for string in self.graph]) + ' |' for i in range(1, len(self.graph[0]) + 1)]
 
     # Create strings of stars for each bar   
-    def __buildBar(self, frequency):
-        return f"{'*'*self.__calculateNoOfStars(frequency):<26}"
+    def buildBar(self, frequency):
+        return "{:<{strLength}}".format('*'*self.calculateNoOfStars(frequency), strLength=self.height)
     
     # Combines strings of stars together into a list
     def __buildBarGraph(self, heights):
-        return [self.__buildBar(height) for height in heights]
-
-    # Calculates correct number of stars for each bar
-    def __calculateNoOfStars(self, frequency):
-        return 0 if frequency == 0 else int(((frequency * 26) // 100) + 1)
+        return [self.buildBar(height) for height in heights]
     
     # Prints formatted graph to command line
-    def plot(self, labels, heights):
+    def plot(self, graphHeight, labels, heights):
+        self.height = graphHeight
         self.buildGraph(labels, heights)
         print("\n".join(self.graph))
+
+    # Method to correctly calculate number of stars for each bar
+    @abstractmethod
+    def calculateNoOfStars(self, frequency):
+        pass
     
     # Method to supply labels and heights and display graph
     @abstractmethod

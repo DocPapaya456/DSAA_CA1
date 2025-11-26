@@ -38,12 +38,16 @@ class LetterFrequency(BarGraph):
 
     # Override displayGraph to include frequencies into graph
     def displayGraph(self):
-        self.plot(list(string.ascii_uppercase), [node.frequency for node in self.letterList.toList()])
+        self.plot(26, list(string.ascii_uppercase), [node.frequency for node in self.letterList.toList()])
     
     # Function to insert letter frequency into both lists
     def __insertLetterFrequency(self, letter, frequency):
         self.frequencyList.insert(FreqNode(letter, frequency))
         self.letterList.insert(FreqNode(letter, frequency, sortType='letter'))
+    
+    # Override method to calculate correct number of stars for each letter
+    def calculateNoOfStars(self, frequency):
+        return 0 if frequency == 0 else int(((frequency * 26) // 100) + 1)
 
     # Override addInformation to add top frequencies
     def addInformation(self):

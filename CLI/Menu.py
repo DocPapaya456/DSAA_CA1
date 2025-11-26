@@ -32,7 +32,7 @@ Please select your choice: (1,2,3,4,5,6,7)
 \t3. Infer cipher keyword
 \t4. Batch Decryption
 \t5. Encrypt/Decrypt File using Vigenère
-\t6. Extra Option Two
+\t6. Infer Vigenère key length
 \t7. Exit
             '''
         )

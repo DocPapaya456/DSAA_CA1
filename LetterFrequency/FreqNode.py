@@ -28,5 +28,5 @@ class FreqNode(Node):
         
         return self.letter < otherNode.letter
     
-    def __repr__(self):
-        return f"{self.letter}: {self.frequency:.2f}%"
+    # def __repr__(self):
+    #     return f"{self.letter}: {self.frequency:.2f}%"

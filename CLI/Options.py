@@ -2,6 +2,7 @@ from Ciphers.KeywordCipher import KeywordCipher
 from LetterFrequency.LetterFrequency import LetterFrequency
 from Ciphers.CipherInferer import CipherInferer
 from Ciphers.VigenereCipher import VigenereCipher
+from LetterFrequency.KeyLengthAnalysis import KeyLengthAnalysis
 import os
 
 class Options:
@@ -198,13 +199,24 @@ Because it uses multiple shifting values instead of a single one, the Vigenère 
     
     # Extra option 2
     def indexOfCoincidence(self):
-        print('''*****************************
-* Index of Coincidence (IC) *
-*****************************
+        print('''******************************
+* Index of Coincidence (IOC) *
+******************************
 
-The IC measures how likely two letters in a text are the same. In Vigenère cipher analysis, it helps estimate the key length.
-For a guessed key length k, the ciphertext is split into k parts, IC is computed for each, and the average is compared:
-    0.066 --> likely English text (probable key length)
-    0.038 --> random text (wrong key length)
+The IOC measures how likely two letters in a text are the same. In Vigenère cipher analysis, it helps estimate the key length.
+For a guessed key length k, the ciphertext is split into k parts, IOC is computed for each, and the average is compared:
+    1.734 --> likely English text (probable key length)
+    1 --> random text (wrong key length)
 ''')
         input('Press Enter, to continue...')
+        print()
+
+        input_file = input('Please enter the file you want to analyze: ')
+        print()
+        while not os.path.isfile(input_file):
+            input_file = input('File not found. Please enter the file you want to analyze: ')
+            print()
+        
+        analysis = KeyLengthAnalysis()
+        analysis.analyseFromFile(input_file)
+        analysis.displayGraph()

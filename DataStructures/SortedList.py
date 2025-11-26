@@ -1,3 +1,4 @@
+from DataStructures.SortedListIterator import SortedListIterator
 class SortedList:
     def __init__(self):
         self.headNode = None
@@ -76,6 +77,9 @@ class SortedList:
             current = current.nextNode
         
         return result
+    
+    def __iter__(self):
+        return SortedListIterator(self.headNode)
 
 
         
