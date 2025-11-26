@@ -6,7 +6,10 @@ from LetterFrequency.KeyLengthAnalysis import KeyLengthAnalysis
 import os
 
 class Options:
-    def __init__(self):
+    """Handles menu options logic for the application."""
+
+    def __init__(self) -> None:
+        # Map option numbers to handler methods
         self.__options = {
             "1": self.encyptDecryptFile,
             "2": self.displayLetterDistribution,
@@ -16,15 +19,15 @@ class Options:
             "6": self.indexOfCoincidence
         }
 
-    # Runs specified option function
-    def runOption(self, option):
+    def runOption(self, option: str) -> None:
+        """Runs the specified option handler."""
         self.__options[option]()
 
-    # Encrypt/Decrypt File
-    def encyptDecryptFile(self):
+    def encyptDecryptFile(self) -> None:
+        """Encrypt or decrypt a file using Keyword Cipher."""
         encryptOption = input('Enter "E" for Encrypt or "D" for Decrypt: ').strip().upper()
         print()
-        while encryptOption != "E" and encryptOption != "D":
+        while encryptOption not in ("E", "D"):
             encryptOption = input('Invalid Input. Please enter "E" for Encrypt or "D" for Decrypt: ').strip().upper()
             print()
         
@@ -45,7 +48,6 @@ class Options:
             print()
             
             keywordCipher = KeywordCipher(keyword)
-
             keywordCipher.encryptFile(input_file, output_file)
         
         else:
@@ -64,11 +66,10 @@ class Options:
             output_file = input("Please enter an output file: ")
 
             keywordCipher = KeywordCipher(keyword)
-
             keywordCipher.decryptFile(input_file, output_file)
     
-    # Letter frequency distribution
-    def displayLetterDistribution(self):
+    def displayLetterDistribution(self) -> None:
+        """Analyze and display letter frequency distribution as a bar graph."""
         input_file = input('Please enter the file you want to analyze: ')
         print()
 
@@ -81,8 +82,8 @@ class Options:
         letterFreq.displayGraph()
         print()
 
-    # Infer cipher keyword
-    def inferCipherKeyword(self):
+    def inferCipherKeyword(self) -> None:
+        """Infer the keyword used to encrypt a file."""
         input_file = input('Please enter the file you want to analyze: ')
         print()
 
@@ -109,8 +110,8 @@ class Options:
             cipher = KeywordCipher(inferred_keyword)
             cipher.decryptFile(input_file, output_file)
 
-    # Batch decryption
-    def batchDecryption(self):
+    def batchDecryption(self) -> None:
+        """Batch process multiple encrypted files and decrypt them."""
         input_directory = input('Please enter the folder name: ')
         print()
 
@@ -129,10 +130,8 @@ class Options:
         input('Press Enter, to continue...')
         print()
 
-
-    # Extra option 1
-    def encryptDecryptFileVignere(self):
-        # Info about Vignere Cipher
+    def encryptDecryptFileVignere(self) -> None:
+        """Encrypt or decrypt file using Vigenère cipher."""
         print('''*********************
 *  Vigenère Cipher  *
 *********************
@@ -154,7 +153,7 @@ Because it uses multiple shifting values instead of a single one, the Vigenère 
         input('Press Enter, to continue...')
         encryptOption = input('Enter "E" for Encrypt or "D" for Decrypt: ').strip().upper()
         print()
-        while encryptOption != "E" and encryptOption != "D":
+        while encryptOption not in ("E", "D"):
             encryptOption = input('Invalid Input. Please enter "E" for Encrypt or "D" for Decrypt: ').strip().upper()
             print()
         
@@ -175,7 +174,6 @@ Because it uses multiple shifting values instead of a single one, the Vigenère 
             print()
             
             vignereCipher = VigenereCipher(keyword)
-
             vignereCipher.encryptFile(input_file, output_file)
         
         else:
@@ -192,13 +190,11 @@ Because it uses multiple shifting values instead of a single one, the Vigenère 
                 print()
             
             output_file = input("Please enter an output file: ")
-
             vignereCipher = VigenereCipher(keyword)
-
             vignereCipher.decryptFile(input_file, output_file)
     
-    # Extra option 2
-    def indexOfCoincidence(self):
+    def indexOfCoincidence(self) -> None:
+        """Estimate key length using Index of Coincidence (IOC) technique."""
         print('''******************************
 * Index of Coincidence (IOC) *
 ******************************

@@ -1,13 +1,13 @@
-
 from CLI.Options import Options
 
 class Menu(Options):
-    def __init__(self):
+    """Menu class responsible for displaying user options."""
+
+    def __init__(self) -> None:
         super().__init__()
 
-    
-    # Display Welcome Screen
-    def displayWelcome(self):
+    def displayWelcome(self) -> None:
+        """Displays welcome screen."""
         print('''
 *********************************************************
 * ST1507 DSAA: Welcome to:                              *
@@ -22,8 +22,8 @@ class Menu(Options):
         input("Press Enter, to continue...")
         print()
 
-    # Display menu options
-    def displayOptions(self):
+    def displayOptions(self) -> None:
+        """Displays options for main menu."""
         print(
             '''
 Please select your choice: (1,2,3,4,5,6,7)
@@ -36,5 +36,3 @@ Please select your choice: (1,2,3,4,5,6,7)
 \t7. Exit
             '''
         )
-
-    

@@ -1,85 +1,76 @@
 from DataStructures.SortedListIterator import SortedListIterator
-class SortedList:
-    def __init__(self):
-        self.headNode = None
-    
-    def empty(self):
-        return self.headNode == None
-    
-    def insert(self, node):
+from DataStructures.Node import Node
+from typing import List, Optional
 
+class SortedList:
+    """Linked list that maintains sorted order of inserted nodes."""
+
+    def __init__(self) -> None:
+        self.headNode: Optional[Node] = None
+    
+    def empty(self) -> bool:
+        """Check if the list is empty."""
+        return self.headNode is None
+    
+    def insert(self, node: Node) -> None:
+        """Insert a new node while maintaining sorted order."""
         if self.empty() or node < self.headNode:
             node.nextNode = self.headNode
             self.headNode = node
             return
         
         current = self.headNode
-
         while current.nextNode and node > current.nextNode:
             current = current.nextNode
         
-        if current.nextNode == None:
+        if current.nextNode is None:
             current.nextNode = node
             return
         
         node.nextNode = current.nextNode
         current.nextNode = node
 
-    def size(self):
-        if self.empty():
-            return 0
-        
-        current = self.headNode
+    def size(self) -> int:
+        """Count number of nodes in list."""
         count = 0
-        while current != None:
+        current = self.headNode
+        while current:
             count += 1
             current = current.nextNode
-        
         return count
     
-    def top(self, n):
+    def top(self, n: int) -> List[Node]:
+        """Return top 'n' nodes (sorted descending)."""
         if self.empty():
             return []
-
         current = self.headNode
         topNodes = [self.headNode]
-
         while current.nextNode:
             topNodes.append(current.nextNode)
             if len(topNodes) > n:
                 topNodes.pop(0)
             current = current.nextNode
-        
         return topNodes[::-1]
     
-    def __str__(self):
+    def __str__(self) -> str:
         if self.empty():
             return '<>'
-        
+        nodes = []
         current = self.headNode
-        nodes = [self.headNode]
-
-        while current.nextNode:
-            nodes.append(current.nextNode)
+        while current:
+            nodes.append(current)
             current = current.nextNode
-        
         return "<" + ",".join([str(node) for node in nodes]) + ">"
     
-    def toList(self):
-        if self.empty():
-            return []
-        
-        result = [self.headNode]
+    def toList(self) -> List[Node]:
+        """Convert linked list to a regular Python list."""
+        result = []
         current = self.headNode
-
-        while current.nextNode:
-            result.append(current.nextNode)
+        while current:
+            result.append(current)
             current = current.nextNode
-        
         return result
     
-    def __iter__(self):
+    def __iter__(self) -> SortedListIterator:
+        """Return an iterator for the list."""
         return SortedListIterator(self.headNode)
-
-
-        

@@ -4,64 +4,57 @@ import string
 from Graph.BarGraph import BarGraph
 
 class LetterFrequency(BarGraph):
-    def __init__(self):
-        super().__init__()
-        # Track two lists: one sorted by frequency, another sorted by alphabetical order
-        self.frequencyList = SortedList()
-        self.letterList = SortedList()
-        self.numLetters = 0
+    """Analyzes and visualizes letter frequencies in a text."""
 
-    # Analyses letter frequency from file content
-    def analyseFromFile(self, filepath):
+    def __init__(self) -> None:
+        super().__init__()
+        self.frequencyList = SortedList()  # Sort by frequency
+        self.letterList = SortedList()     # Sort alphabetically
+        self.numLetters: int = 0
+
+    def analyseFromFile(self, filepath: str) -> None:
+        """Analyze letter frequencies in a text file."""
         with open(filepath, 'r', encoding='utf-8') as infile:
             contents = infile.read()
-        
         self.analyseFrequency(contents)
-
-    # Stores frequency of each letter into FreqNodes and sorted using SortedLists    
-    def analyseFrequency(self, text):
-        formatted = ""
-        for c in text:
-            if c.isalpha():
-                formatted += c
-        
-        formatted = formatted.upper()
+    
+    def analyseFrequency(self, text: str) -> None:
+        """Analyze frequencies of letters within given string."""
+        formatted = "".join(c for c in text if c.isalpha()).upper()
         self.numLetters = len(formatted)
 
         frequencies = {c: 0 for c in string.ascii_uppercase}
-
         for c in set(formatted):
-            frequencies[c] = (formatted.count(c) / self.numLetters) * 100
+            frequencies[c] = (formatted.count(c) / self.numLetters) * 100 if self.numLetters else 0
         
         for c, frequency in frequencies.items():
             self.__insertLetterFrequency(c, frequency)
 
-    # Override displayGraph to include frequencies into graph
-    def displayGraph(self):
+    def displayGraph(self) -> None:
+        """Display letter frequency graph in console."""
         self.plot(26, list(string.ascii_uppercase), [node.frequency for node in self.letterList.toList()])
     
-    # Function to insert letter frequency into both lists
-    def __insertLetterFrequency(self, letter, frequency):
+    def __insertLetterFrequency(self, letter: str, frequency: float) -> None:
+        """Insert frequency data into both lists."""
         self.frequencyList.insert(FreqNode(letter, frequency))
         self.letterList.insert(FreqNode(letter, frequency, sortType='letter'))
     
-    # Override method to calculate correct number of stars for each letter
-    def calculateNoOfStars(self, frequency):
+    def calculateNoOfStars(self, frequency: float) -> int:
+        """Convert frequency to proportional star count."""
         return 0 if frequency == 0 else int(((frequency * 26) // 100) + 1)
 
-    # Override addInformation to add top frequencies
-    def addInformation(self):
+    def addInformation(self) -> None:
+        """Add frequency percentage details and top 5 letters beside graph."""
         formattedFrequencies = self.__formatLetterFrequencies()
         self.graph = [self.graph[i] + formattedFrequencies[i] for i in range(len(self.graph))]
-        self.__formatTopFreqencies()
+        self.__formatTopFrequencies()
     
-    # Creates list of letter frequencies
-    def __formatLetterFrequencies(self):
+    def __formatLetterFrequencies(self) -> list[str]:
+        """Format letter-frequency info for display next to bars."""
         return [f'{node.letter}-{node.frequency:5.2f}%' for node in self.letterList.toList()]
     
-    # Creates Top 5 frequencies list
-    def __formatTopFreqencies(self):
-        # Add padding
+    def __formatTopFrequencies(self) -> None:
+        """Display top 5 most frequent letters on the right side of graph."""
         for i in range(10, 17):
             self.graph[i] += "    "
         
@@ -69,24 +62,14 @@ class LetterFrequency(BarGraph):
         self.graph[11] += "----------"
 
         freqList = self.frequencyList.top(5)
-
         for i in range(12, 17):
             self.graph[i] += f'| {freqList[i-12].letter}-{freqList[i-12].frequency:5.2f}%'
-        
-
-    # Calculate chi-squared statistic of analysed text
-    def calculateChiSquared(self):
-        with open('LetterFrequency/english_letter_frequency.txt', 'r') as f:
+    
+    def calculateChiSquared(self) -> float:
+        """Compute Chi-squared statistic comparing with English letter distribution."""
+        with open('LetterFrequency/english_letter_frequency.txt', 'r', encoding='utf-8') as f:
             expectedFrequency = [float(line.split(',')[1]) for line in f.readlines()]
         
         frequencyList = self.letterList.toList()
-
         chi_squared = self.numLetters * sum([((o.frequency - e)**2)/e for o, e in zip(frequencyList, expectedFrequency)])
-        
         return float(chi_squared)
-
-
-
-
-
-            

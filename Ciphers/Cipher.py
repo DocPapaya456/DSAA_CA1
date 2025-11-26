@@ -1,38 +1,34 @@
 from abc import ABC, abstractmethod
 
 class Cipher(ABC):
+    """Abstract base class for Ciphers providing encryption and decryption interface."""
 
     @abstractmethod
-    def encrypt(self, plaintext):
+    def encrypt(self, plaintext: str) -> str:
+        """Encrypt plain text string."""
         pass
 
     @abstractmethod
-    def decrypt(self, ciphertext):
+    def decrypt(self, ciphertext: str) -> str:
+        """Decrypt cipher text string."""
         pass
 
-    # Encrypts file contents from input_path and outputs into output_path
-    def encryptFile(self, input_path, output_path):
-
-        # Read from input file
+    def encryptFile(self, input_path: str, output_path: str) -> None:
+        """Encrypt file contents from input_path and save to output_path."""
         with open(input_path, 'r', encoding='utf-8') as infile:
             contents = infile.read()
 
-        # Encrypt file contents
         processed = self.encrypt(contents)
 
-        # Write processed data to output file
         with open(output_path, 'w', encoding='utf-8') as outfile:
             outfile.write(processed)
 
-    # Decrypts file contents from input_path and outputs into output_path
-    def decryptFile(self, input_path, output_path):
-        # Read from input file
+    def decryptFile(self, input_path: str, output_path: str) -> None:
+        """Decrypt file contents from input_path and save to output_path."""
         with open(input_path, 'r', encoding='utf-8') as infile:
             contents = infile.read()
 
-        # Encrypt file contents
         processed = self.decrypt(contents)
 
-        # Write processed data to output file
         with open(output_path, 'w', encoding='utf-8') as outfile:
             outfile.write(processed)

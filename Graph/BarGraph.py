@@ -1,12 +1,16 @@
 from abc import ABC, abstractmethod
+from typing import List
+
 class BarGraph(ABC):
-    def __init__(self):
-        self.graph = None
-        self.labels = None
-        self.height = None
+    """Base class for drawing ASCII bar graphs."""
+
+    def __init__(self) -> None:
+        self.graph: List[str] = []
+        self.labels: List[str] = []
+        self.height: int = 0
     
-    # Formats the graph
-    def buildGraph(self, labels, heights):
+    def buildGraph(self, labels: List[str], heights: List[float]) -> None:
+        """Constructs the bar graph layout from labels and heights."""
         self.labels = labels
         self.graph = self.__buildBarGraph(heights)
         self.graph = self.__reformatBarGraph()
@@ -15,35 +19,35 @@ class BarGraph(ABC):
         self.graph.append('_' * (len(labelsAxis)-1))
         self.graph.append(labelsAxis)
     
-    # Rotates bar graph anti-clockwise
-    def __reformatBarGraph(self):
+    def __reformatBarGraph(self) -> List[str]:
+        """Rotates bars anti-clockwise for vertical display."""
         return [' ' + ' '.join([string[-i] for string in self.graph]) + ' |' for i in range(1, len(self.graph[0]) + 1)]
 
-    # Create strings of stars for each bar   
-    def buildBar(self, frequency):
-        return "{:<{strLength}}".format('*'*self.calculateNoOfStars(frequency), strLength=self.height)
+    def buildBar(self, frequency: float) -> str:
+        """Create one vertical bar of stars based on frequency."""
+        return "{:<{strLength}}".format('*' * self.calculateNoOfStars(frequency), strLength=self.height)
     
-    # Combines strings of stars together into a list
-    def __buildBarGraph(self, heights):
+    def __buildBarGraph(self, heights: List[float]) -> List[str]:
+        """Build horizontal list of bar strings."""
         return [self.buildBar(height) for height in heights]
     
-    # Prints formatted graph to command line
-    def plot(self, graphHeight, labels, heights):
+    def plot(self, graphHeight: int, labels: List[str], heights: List[float]) -> None:
+        """Plot the graph to terminal."""
         self.height = graphHeight
         self.buildGraph(labels, heights)
         print("\n".join(self.graph))
 
-    # Method to correctly calculate number of stars for each bar
     @abstractmethod
-    def calculateNoOfStars(self, frequency):
+    def calculateNoOfStars(self, frequency: float) -> int:
+        """Return number of stars to represent given frequency."""
         pass
-    
-    # Method to supply labels and heights and display graph
+
     @abstractmethod
-    def displayGraph(self):
+    def displayGraph(self) -> None:
+        """Display the complete bar graph."""
         pass
-    
-    # Method to include additional information in the graph
+
     @abstractmethod
-    def addInformation(self):
+    def addInformation(self) -> None:
+        """Add extra information to the graph display."""
         pass

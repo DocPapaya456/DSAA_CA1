@@ -1,9 +1,13 @@
 from CLI.Menu import Menu
+
 class CLI:
-    def __init__(self):
+    """Handles command-line user interface logic."""
+
+    def __init__(self) -> None:
         self.menu = Menu()
     
-    def run(self):
+    def run(self) -> None:
+        """Main application loop."""
         self.menu.displayWelcome()
         while True:
             try:
@@ -13,7 +17,8 @@ class CLI:
                     print('\nBye, thanks for using ST1507 DSAA: Keyword Cipher Encrypted Message Analyzer')
                     break
 
-                if not (option.isdigit() and int(option) > 0 and int(option) < 7):
+                # Validate option range
+                if not (option.isdigit() and 0 < int(option) < 7):
                     print(f'Option "{option}" does not exist. Please try again.')
                     continue
                 

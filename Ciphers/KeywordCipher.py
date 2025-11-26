@@ -2,21 +2,26 @@ import string
 from Ciphers.Cipher import Cipher
 
 class KeywordCipher(Cipher):
-    def __init__(self, keyword):
+    """Implements a simple keyword substitution cipher."""
+
+    def __init__(self, keyword: str) -> None:
         formattedKeyword = self.formatKeyword(keyword.upper())
         self.__alphabet = string.ascii_uppercase
-        self.__cipher_alpha = formattedKeyword + "".join(sorted(set(self.__alphabet) - set(formattedKeyword)))
+        # Cipher alphabet: keyword followed by remaining letters
+        self.__cipher_alpha = formattedKeyword + "".join(
+            sorted(set(self.__alphabet) - set(formattedKeyword))
+        )
     
-    # Removes duplicate letters in keyword
-    def formatKeyword(self, keyword):
+    def formatKeyword(self, keyword: str) -> str:
+        """Removes duplicate letters from keyword while preserving order."""
         formattedKeyword = ""
         for c in keyword:
-            if not (c in formattedKeyword):
+            if c not in formattedKeyword:
                 formattedKeyword += c
         return formattedKeyword
     
-    # Encrypts plaintext using keyword alphabet
-    def encrypt(self, plaintext):
+    def encrypt(self, plaintext: str) -> str:
+        """Encrypts plaintext using the keyword substitution cipher."""
         ciphertext = ""
         for c in plaintext:
             if not c.isalpha():
@@ -29,8 +34,8 @@ class KeywordCipher(Cipher):
             ciphertext += cipherChar
         return ciphertext
     
-    # Decrypts ciphertext using keyword alphabet
-    def decrypt(self, ciphertext):
+    def decrypt(self, ciphertext: str) -> str:
+        """Decrypts ciphertext using the keyword substitution cipher."""
         plaintext = ""
         for c in ciphertext:
             if not c.isalpha():
@@ -42,7 +47,3 @@ class KeywordCipher(Cipher):
                 plainChar = self.__alphabet[self.__cipher_alpha.index(c)]
             plaintext += plainChar
         return plaintext
-    
-    
-
-    
